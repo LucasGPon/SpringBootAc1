@@ -37,7 +37,7 @@ public class ProdutoRepository {
     }
 
     public List<Produto> obterPorId(String prod_nome) {
-        String jpql = "select * from tbl_produtos p where p.prod_nome like :prod_nome ";
+        String jpql = "select p from Produto p where p.prod_nome like :prod_nome ";
         TypedQuery<Produto> query = entityManager.createQuery(jpql, Produto.class);
         query.setParameter("prod_nome", "%" + prod_nome + "%");
         return query.getResultList();

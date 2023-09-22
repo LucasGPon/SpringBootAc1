@@ -41,6 +41,7 @@ public class AtividadeApplication {
 			categoriaProdutoRepository.inserir(c1);
 
 			System.out.println("** Exemplo atualiza categ. curso **");
+			c1 = categoriaProdutoRepository.obterTodos().get(0);
 			listaProdutos.get(1).setCategoriaProduto(c1);
 			produtoRepository.inserir(listaProdutos.get(1));
 
