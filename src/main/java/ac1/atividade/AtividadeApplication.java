@@ -18,32 +18,73 @@ public class AtividadeApplication {
 
 	@Bean
 	public CommandLineRunner init(
-			@Autowired ProdutoRepository produtoRepository,
-			@Autowired CategoriaProdutoRepository categoriaProdutoRepository) {
+			@Autowired ProdutoRepository produtoRepository, CategoriaProdutoRepository categoriaProdutoRepository) {
 		return args -> {
-			produtoRepository.inserir(
-					new Produto(1, "macarrão", 3500));
-			produtoRepository.inserir(
-					new Produto(2, "café", 1500));
-			List<Produto> listaProdutos = produtoRepository.obterTodos();
-			listaProdutos.forEach(System.out::println);
 
-			System.out.println("** Excluindo por ID **");
-			produtoRepository.excluir(1);
-			listaProdutos.forEach(System.out::println);
+			System.out.println("*** INSERINDO PRODUTO ***");
+			Produto c1 = new Produto((long) 0, "Notebook", 2000.0 );
+			Produto c2 = new Produto((long) 0, "Sabão", 21.0);
+			Produto c3 = new Produto((long) 0, "Televisão", 710.0);
+			c1 = produtoRepository.save(c1);
+			c2 = produtoRepository.save(c2);
+			c3 = produtoRepository.save(c3);
 
-			System.out.println("** Exemplo obter por ID **");
-			Produto produto = produtoRepository.obterPorId("caf").get(0);
-			System.out.println(produto);
+			System.out.println("*** INSERINDO CATEGORIA ***");
+			CategoriaProduto eletro = new CategoriaProduto((long) 0, "Eletro");
+			CategoriaProduto basar = new CategoriaProduto((long) 0, "Basar");
+			eletro = categoriaProdutoRepository.save(eletro);
+			basar = categoriaProdutoRepository.save(basar);
 
-			System.out.println("** Exemplo inserir categoria **");
-			CategoriaProduto c1 = new CategoriaProduto(1, "Mercearia","Produtos Industrializados");
-			categoriaProdutoRepository.inserir(c1);
 
-			System.out.println("** Exemplo atualiza categ. curso **");
-			c1 = categoriaProdutoRepository.obterTodos().get(0);
-			listaProdutos.get(1).setCategoriaProduto(c1);
-			produtoRepository.inserir(listaProdutos.get(1));
+			System.out.println("*** EDITANDO PRODUTO ***");
+			c1.setNome("Notebook Acer i5 ² Geração");
+			c1.setCategoriaProduto(eletro);
+			c2.setCategoriaProduto(basar);
+			c1 = produtoRepository.save(c1);
+			c2 = produtoRepository.save(c2);
+
+			System.out.println("*** LISTAR TODOS PRODUTOS ***");
+			List<Produto> produtos = produtoRepository.findAll();
+			for (Produto p : produtos) {
+				System.out.println(p.getNome());
+			}
+
+			// System.out.println("*** EXCLUIR PRODUTO ***");
+			// produtoRepository.delete(c2);
+			// produtoRepository.deleteById((long) 1);
+
+			System.out.println("*** LISTAR POR INICIAL NOME ***");
+			List<Produto> produtos1 = produtoRepository.findByNomeStartingWith("N");
+			for (Produto p : produtos1) {
+				System.out.println(p.getNome());
+			}
+
+			System.out.println("*** LISTAR PREÇO MAIOR ***");
+			List<Produto> produtos2 = produtoRepository.findByPrecoGreaterThan(1.0);
+			for (Produto p : produtos2) {
+				System.out.println(p.getNome());
+			}
+
+			System.out.println("*** LISTAR PREÇO MENOR IGUAL ***");
+			List<Produto> produtos3 = produtoRepository.findByPrecoLessThanEqual(30.0);
+			for (Produto p : produtos3) {
+				System.out.println(p.getNome());
+			}
+
+			System.out.println("*** LISTAR CATEGORIA POR NOME ***");
+			List<CategoriaProduto> categoria = categoriaProdutoRepository.findByCategoria("Eletro");
+			for (CategoriaProduto c : categoria) {
+				System.out.println(c.getCategoria());
+			}
+
+			System.out.println("*** LISTAR PRODUTOS POR ID CATEGORIA ***");
+			List<CategoriaProduto> categs = categoriaProdutoRepository.findAll();
+			for (CategoriaProduto ca : categs) {
+			System.out.println(ca.getId() + " - " + ca.getCategoria() + "qtde produtos: " +
+			ca.getProdutos().size());
+			}
+			CategoriaProduto cc = categoriaProdutoRepository.findCategoriaProdutoFetchProduto((long) 1);
+			System.out.println(cc.getProdutos().size());
 
 		};
 	}

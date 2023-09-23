@@ -14,48 +14,52 @@ import jakarta.persistence.Table;
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_produto")
-    private int id_produto;
-    @Column(name = "prod_nome")
-    private String prod_nome;
-    @Column(name = "prod_qtd")
-    private int prod_qtd;
-    
+    private long id;
+    @Column(length = 200, nullable = false)
+    private String nome;
+    @Column(nullable = false)
+    private Double preco;
+
     @ManyToOne
     @JoinColumn(name = "categoriaProduto_id")
     private CategoriaProduto categoriaProduto;
 
-    public Produto(int id_produto, String prod_nome, int prod_qtd) {
-        this.id_produto = id_produto;
-        this.prod_nome = prod_nome;
-        this.prod_qtd = prod_qtd;
+    public Produto(long id, String nome, Double preco) {
+        this.id = id;
+        this.nome = nome;
+        this.preco = preco;
     }
 
     public Produto() {
     }
 
-    public int getId_produto() {
-        return id_produto;
+    @Override
+    public String toString() {
+        return "Produto [id=" + id + ", nome=" + nome + ", preco=" + preco + "]";
     }
 
-    public void setId_produto(int id_produto) {
-        this.id_produto = id_produto;
+    public long getId() {
+        return id;
     }
 
-    public String getProd_nome() {
-        return prod_nome;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setProd_nome(String prod_nome) {
-        this.prod_nome = prod_nome;
+    public String getNome() {
+        return nome;
     }
 
-    public int getProd_qtd() {
-        return prod_qtd;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public void setProd_qtd(int prod_qtd) {
-        this.prod_qtd = prod_qtd;
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
     }
 
     public CategoriaProduto getCategoriaProduto() {
@@ -64,11 +68,6 @@ public class Produto {
 
     public void setCategoriaProduto(CategoriaProduto categoriaProduto) {
         this.categoriaProduto = categoriaProduto;
-    }
-
-    @Override
-    public String toString() {
-        return "Produto [id_produto=" + id_produto + ", prod_nome=" + prod_nome + ", prod_qtd=" + prod_qtd + "]";
     }
 
 }

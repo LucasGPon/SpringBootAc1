@@ -2,28 +2,15 @@ package ac1.atividade.repository;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import ac1.atividade.models.CategoriaProduto;
-import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
 
-@Repository
-public class CategoriaProdutoRepository {
-    @Autowired
-    private EntityManager entityManager;
+public interface CategoriaProdutoRepository extends JpaRepository<CategoriaProduto, Long> {
+    List<CategoriaProduto> findByCategoria(String nome);
 
-    @Transactional
-    public CategoriaProduto inserir(CategoriaProduto categoriaProduto) {
-        entityManager.merge(categoriaProduto);
-        return categoriaProduto;
-    }
-
-    public List<CategoriaProduto> obterTodos() {
-        return entityManager
-                .createQuery("from CategoriaProduto",
-                        CategoriaProduto.class)
-                .getResultList();
-    }
+    @Query("select cc from CategoriaProduto cc left join fetch cc.produtos c where cc.id = :id ")
+    CategoriaProduto findCategoriaProdutoFetchProduto(@Param("id") Long id);
 }

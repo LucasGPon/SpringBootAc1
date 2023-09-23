@@ -14,48 +14,36 @@ import jakarta.persistence.Table;
 @Table(name = "tbl_categorias")
 public class CategoriaProduto {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_categoria")
-    private int id_categoria;
-    @Column(name = "cat_nome")
-    private String cat_nome;
-    @Column(name = "cat_descricao")
-    private String cat_descricao;
-    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column(length = 200, nullable = false)
+    private String categoria;
+
     @OneToMany(mappedBy = "categoriaProduto")
     private List<Produto> produtos;
+
+    public CategoriaProduto(long id, String categoria) {
+        this.id = id;
+        this.categoria = categoria;
+    }
 
     public CategoriaProduto() {
     }
 
-    public CategoriaProduto(int id_categoria, String cat_nome, String cat_descricao) {
-        this.id_categoria = id_categoria;
-        this.cat_nome = cat_nome;
-        this.cat_descricao = cat_descricao;
+    public long getId() {
+        return id;
     }
 
-    public int getId_categoria() {
-        return id_categoria;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setId_categoria(int id_categoria) {
-        this.id_categoria = id_categoria;
+    public String getCategoria() {
+        return categoria;
     }
 
-    public String getCat_nome() {
-        return cat_nome;
-    }
-
-    public void setCat_nome(String cat_nome) {
-        this.cat_nome = cat_nome;
-    }
-
-    public String getCat_descricao() {
-        return cat_descricao;
-    }
-
-    public void setCat_descricao(String cat_descricao) {
-        this.cat_descricao = cat_descricao;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public List<Produto> getProdutos() {
