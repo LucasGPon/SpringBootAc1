@@ -1,4 +1,4 @@
-package ac1.atividade.models;
+package ac2.atividadeProduto.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

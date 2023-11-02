@@ -1,4 +1,4 @@
-package ac1.atividade;
+package ac2.atividadeProduto;
 
 import java.util.List;
 
@@ -8,10 +8,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import ac1.atividade.models.CategoriaProduto;
-import ac1.atividade.models.Produto;
-import ac1.atividade.repository.CategoriaProdutoRepository;
-import ac1.atividade.repository.ProdutoRepository;
+import ac2.atividadeProduto.models.CategoriaProduto;
+import ac2.atividadeProduto.models.Produto;
+import ac2.atividadeProduto.repository.CategoriaProdutoRepository;
+import ac2.atividadeProduto.repository.ProdutoRepository;
 
 @SpringBootApplication
 public class AtividadeApplication {
@@ -72,19 +72,19 @@ public class AtividadeApplication {
 			}
 
 			System.out.println("*** LISTAR CATEGORIA POR NOME ***");
-			List<CategoriaProduto> categoria = categoriaProdutoRepository.findByCategoria("Eletro");
+			List<CategoriaProduto> categoria = categoriaProdutoRepository.findByNome("Eletro");
 			for (CategoriaProduto c : categoria) {
-				System.out.println(c.getCategoria());
+				System.out.println(c.getNome());
 			}
 
-			System.out.println("*** LISTAR PRODUTOS POR ID CATEGORIA ***");
-			List<CategoriaProduto> categs = categoriaProdutoRepository.findAll();
-			for (CategoriaProduto ca : categs) {
-			System.out.println(ca.getId() + " - " + ca.getCategoria() + "qtde produtos: " +
-			ca.getProdutos().size());
-			}
-			CategoriaProduto cc = categoriaProdutoRepository.findCategoriaProdutoFetchProduto((long) 1);
-			System.out.println(cc.getProdutos().size());
+			// System.out.println("*** LISTAR PRODUTOS POR ID CATEGORIA ***");
+			// List<CategoriaProduto> categs = categoriaProdutoRepository.findAll();
+			// for (CategoriaProduto ca : categs) {
+			// System.out.println(ca.getId() + " - " + ca.getCategoria() + "qtde produtos: " +
+			// ca.getProdutos().size());
+			// }
+			// CategoriaProduto cc = categoriaProdutoRepository.findCategoriaProdutoFetchProduto((long) 1);
+			// System.out.println(cc.getProdutos().size());
 
 		};
 	}

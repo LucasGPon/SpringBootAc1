@@ -1,4 +1,4 @@
-package ac1.atividade.models;
+package ac2.atividadeProduto.models;
 
 import java.util.List;
 
@@ -17,14 +17,14 @@ public class CategoriaProduto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(length = 200, nullable = false)
-    private String categoria;
+    private String nome;
 
     @OneToMany(mappedBy = "categoriaProduto")
     private List<Produto> produtos;
 
-    public CategoriaProduto(long id, String categoria) {
+    public CategoriaProduto(long id, String nome) {
         this.id = id;
-        this.categoria = categoria;
+        this.nome = nome;
     }
 
     public CategoriaProduto() {
@@ -38,12 +38,12 @@ public class CategoriaProduto {
         this.id = id;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public String getNome() {
+        return nome;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public List<Produto> getProdutos() {
